@@ -1110,7 +1110,40 @@
             }
         }
         let currentLightboxIndex = 0;
-        window.galleryImages = [];
+        const photoIds = [
+            'SSV07033', 'SSV07054', 'SSV07027', 'SSV07026', 'SSV06674',
+            'SSV06660', 'SSV06609', 'SSV06598', 'SSV06287', 'SSV06259',
+            'SSV06254', 'SSV06243', 'SSV06239', 'SSV06207'
+        ];
+        const galleryBase = "{% static 'web/images/gallery/' %}";
+        window.galleryImages = photoIds.map(id => ({
+            url: `${galleryBase}${id}.webp`,
+            alt: `Ignite Expo Photo ${id}`
+        }));
+
+        function renderGallery() {
+            const galleryContent = document.getElementById('galleryContent');
+            const galleryContentClone = document.getElementById('galleryContentClone');
+            if (galleryContent && window.galleryImages && window.galleryImages.length > 0) {
+                const imagesHtml = window.galleryImages.map((img, idx) =>
+                    `<div class="group relative w-[280px] sm:w-[330px] h-[195px] sm:h-[225px] rounded-2xl overflow-hidden shrink-0 bg-white p-2 border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-rose-300 transition-all duration-300 hover:scale-[1.02] cursor-pointer" onclick="openGalleryLightbox(${idx})">
+                        <div class="w-full h-full rounded-xl overflow-hidden relative bg-slate-100">
+                            <img src="${img.url}" alt="${img.alt}" loading="lazy" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3">
+                                <span class="text-[11px] font-bold text-white tracking-wide flex items-center gap-1.5 backdrop-blur-md bg-black/40 px-2.5 py-1 rounded-full border border-white/20">
+                                    <i class="ri-zoom-in-line text-[#ff3b5c]"></i> View
+                                </span>
+                                <span class="text-[10px] font-medium text-white/80">Ignite Moments</span>
+                            </div>
+                        </div>
+                     </div>`
+                ).join('');
+                galleryContent.innerHTML = imagesHtml;
+                if (galleryContentClone) {
+                    galleryContentClone.innerHTML = imagesHtml;
+                }
+            }
+        }
         window.openGalleryLightbox = function (index) {
             if (!window.galleryImages || !window.galleryImages.length) return;
             currentLightboxIndex = index;
@@ -1146,7 +1179,7 @@
             const lightboxCounter = document.getElementById('lightboxCounter');
             const lightboxCaption = document.getElementById('lightboxCaption');
             if (img && lightboxImg) {
-                lightboxImg.src = img.original_url || img.fallback_url || img.url;
+                lightboxImg.src = img.url;
                 if (lightboxCounter) lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${window.galleryImages.length}`;
                 if (lightboxCaption) lightboxCaption.textContent = img.alt || `Ignite Expo Highlight ${currentLightboxIndex + 1}`;
             }
@@ -1160,36 +1193,7 @@
             }
         });
         document.addEventListener('DOMContentLoaded', function () {
-            fetch('/api/gallery/')
-                .then(response => response.json())
-                .then(data => {
-                    const galleryContent = document.getElementById('galleryContent');
-                    const galleryContentClone = document.getElementById('galleryContentClone');
-                    if (data.images && data.images.length > 0) {
-                        window.galleryImages = data.images;
-                        const imagesHtml = data.images.map((img, idx) =>
-                            `<div class="group relative w-[280px] sm:w-[330px] h-[195px] sm:h-[225px] rounded-2xl overflow-hidden shrink-0 bg-white p-2 border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-rose-300 transition-all duration-300 hover:scale-[1.02] cursor-pointer" onclick="openGalleryLightbox(${idx})">
-                                <div class="w-full h-full rounded-xl overflow-hidden relative bg-slate-100">
-                                    <picture>
-                                        <source srcset="${img.url}" type="image/webp">
-                                        <img src="${img.fallback_url || img.url}" alt="${img.alt}" loading="lazy" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-                                    </picture>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3">
-                                        <span class="text-[11px] font-bold text-white tracking-wide flex items-center gap-1.5 backdrop-blur-md bg-black/40 px-2.5 py-1 rounded-full border border-white/20">
-                                            <i class="ri-zoom-in-line text-[#ff3b5c]"></i> View
-                                        </span>
-                                        <span class="text-[10px] font-medium text-white/80">Ignite Moments</span>
-                                    </div>
-                                </div>
-                             </div>`
-                        ).join('');
-                        galleryContent.innerHTML = imagesHtml;
-                        galleryContentClone.innerHTML = imagesHtml;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching gallery:', error);
-                });
+            renderGallery();
             const rotatingWords = ['Innovation', 'Technology', 'Engineering', 'Tomorrow'];
             const twElem = document.getElementById('heroTypewriter');
             if (twElem) {
