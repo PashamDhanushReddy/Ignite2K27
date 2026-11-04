@@ -469,23 +469,3 @@ def pdf_receipt(request):
     context = get_registration_context(reg)
     return render(request, 'web/pdf_receipt.html', context)
 
-from django.http import JsonResponse
-from django.templatetags.static import static
-from .models import GalleryImage
-
-def gallery_api(request):
-    expo_photos = [
-        'SSV07033', 'SSV07054', 'SSV07027', 'SSV07026', 'SSV06674',
-        'SSV06660', 'SSV06609', 'SSV06598', 'SSV06287', 'SSV06259',
-        'SSV06254', 'SSV06243', 'SSV06239', 'SSV06207'
-    ]
-    data = [
-        {
-            'url': static(f'web/images/gallery/{name}.webp'),
-            'fallback_url': static(f'web/images/gallery/{name}.jpg'),
-            'original_url': static(f'web/images/{name}.JPG'),
-            'alt': f'Ignite Expo Photo {name}'
-        }
-        for name in expo_photos
-    ]
-    return JsonResponse({'images': data})
