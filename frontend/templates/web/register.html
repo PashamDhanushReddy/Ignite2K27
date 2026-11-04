@@ -145,7 +145,7 @@
                 <div class="text-center max-w-xl mx-auto mb-10">
                     <div class="flex flex-wrap items-center justify-center gap-2 mb-2">
                         <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-amber-500/15 via-rose-500/15 to-purple-500/15 border border-amber-400/50 text-amber-900 text-xs font-black uppercase tracking-wider shadow-xs">
-                            🏆 ₹2,00,000 Prize Pool
+                            🏆 ₹1,00,000 Prize Pool
                         </span>
                         <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-50 text-[#ff3b5c] text-xs font-bold uppercase tracking-wider">
                             Team Registration
@@ -154,7 +154,7 @@
                     <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight font-display">
                         Register for <span class="text-sunset-gradient">Ignite 2K27</span>
                     </h1>
-                    <p class="text-slate-500 text-sm mt-2">Fill in your team details and upload your project abstract to compete for the ₹2,00,000 prize pool.</p>
+                    <p class="text-slate-500 text-sm mt-2">Fill in your team details and upload your project abstract to compete for the ₹1,00,000 prize pool.</p>
                 </div>
 
                 {% if messages %}
@@ -265,7 +265,7 @@
                                 </div>
                                 <div id="payableAmountBadge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-600 text-white font-extrabold text-xs shadow-sm">
                                     <span>Total Payable:</span>
-                                    <span id="payableAmountText">₹500 (2 Members)</span>
+                                    <span id="payableAmountText">₹700 (2 Members)</span>
                                 </div>
                             </div>
 
@@ -317,7 +317,7 @@
                                         </div>
                                         <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
                                             <span class="text-slate-500 font-semibold">Per-head Rate:</span>
-                                            <span class="font-bold text-[#ff3b5c]">₹250 per participant</span>
+                                            <span class="font-bold text-[#ff3b5c]">₹350 per participant</span>
                                         </div>
                                     </div>
 
@@ -325,7 +325,7 @@
                                         <div class="font-bold flex items-center gap-1 text-amber-800">
                                             <i class="ri-information-line text-sm"></i> Payment Instructions:
                                         </div>
-                                        <div>1. Pay team registration fee (<strong id="instructionFee">₹500</strong> for <span id="instructionMembers">2 members</span>) via PhonePe / UPI.</div>
+                                        <div>1. Pay team registration fee (<strong id="instructionFee">₹700</strong> for <span id="instructionMembers">2 members</span>) via PhonePe / UPI.</div>
                                         <div>2. Note down the <strong>12-digit UTR Number</strong> & save a <strong>payment screenshot</strong>.</div>
                                     </div>
                                 </div>
@@ -419,7 +419,7 @@
         }
         function updatePaymentFee() {
             const size = parseInt(document.getElementById('teamSize').value) || 2;
-            const total = size * 250;
+            const total = size * 350;
             const feeBadge = document.getElementById('payableAmountText');
             const instructionFee = document.getElementById('instructionFee');
             const instructionMembers = document.getElementById('instructionMembers');
